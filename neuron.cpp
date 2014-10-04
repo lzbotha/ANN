@@ -4,7 +4,7 @@
 
 #include "neuron.h"
 
-neuron::neuron(int num_inputs) : weights_from_input(std::vector<float>(num_inputs)){
+neuron::neuron(int num_inputs) : value(0.0f), weights_from_input(std::vector<float>(num_inputs)){
     std::srand(std::time(0)); // use current time as seed for random generator
 
     // Initialize all input weights to random values in the interval [-0.5, 0,5]
@@ -21,7 +21,7 @@ void neuron::print_weights(){
 }
 
 std::string neuron::to_string(void){
-    std::string temp ("Value:\t" + std::to_string(this->value) + "\n");
+    std::string temp ("Value:\t" + std::to_string(this->value) + "\nInput Weights: ");
 
     for_each(weights_from_input.begin(), weights_from_input.end(), [& temp](float & weight){
         temp += std::to_string(weight) + " ";
