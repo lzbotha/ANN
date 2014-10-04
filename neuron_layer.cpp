@@ -3,8 +3,7 @@
 #include "neuron_layer.h"
 
 neuron_layer::neuron_layer(int size_of_layer, int size_of_prev_layer){
-
-    //neurons(std::vector<neuron>(size_of_layer, neuron(size_of_prev_layer)))
+    // Initialize size_of_layer neurons, this cannot be done in an initializer list as random values are assigned to variables
     for(int i = 0; i < size_of_layer; ++i){
         neurons.push_back(neuron(size_of_prev_layer));
     }
