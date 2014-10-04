@@ -3,7 +3,7 @@
 #include <vector>
 
 class neuron{
-    public:
+    private:
         /**
          The value stored at this neuron
         */
@@ -14,8 +14,12 @@ class neuron{
         */
         std::vector<float> weights_from_input;
 
+    public:
+        
         neuron(int num_inputs);
         void print_weights(void);
+        void set_value(float value) {this->value = value;}
+        float get_value(void) {return this->value;}
 };
 
 #endif
