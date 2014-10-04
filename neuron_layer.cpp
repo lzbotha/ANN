@@ -17,3 +17,7 @@ std::string neuron_layer::to_string(void){
 
     return std::move(temp);
 }
+
+void neuron_layer::feed_forward(const neuron_layer & prev_layer){
+    
+}
