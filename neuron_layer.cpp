@@ -2,10 +2,12 @@
 
 #include "neuron_layer.h"
 
-neuron_layer::neuron_layer(int size_of_layer, int size_of_prev_layer = 0) :
-    neurons(std::vector<neuron>(size_of_layer, neuron(size_of_prev_layer)))
-{
+neuron_layer::neuron_layer(int size_of_layer, int size_of_prev_layer){
 
+    //neurons(std::vector<neuron>(size_of_layer, neuron(size_of_prev_layer)))
+    for(int i = 0; i < size_of_layer; ++i){
+        neurons.push_back(neuron(size_of_prev_layer));
+    }
 }
 
 std::string neuron_layer::to_string(void){

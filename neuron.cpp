@@ -7,10 +7,9 @@
 
 neuron::neuron(int num_inputs) : value(0.0f), weights_from_input(std::vector<float>(num_inputs)){
 
-    //TODO: fix the pseudo random number generation going on here
-    //      atm each nodes rand num generator has the same seed so all nodes are identical
+    static int neurons = 0;
 
-    std::default_random_engine generator;    
+    std::default_random_engine generator;
 
     typedef std::chrono::high_resolution_clock myclock;
     myclock::time_point beginning = myclock::now();
@@ -19,12 +18,19 @@ neuron::neuron(int num_inputs) : value(0.0f), weights_from_input(std::vector<flo
     unsigned seed2 = d.count();
 
     generator.seed (seed2);
-    std::uniform_real_distribution<float> distribution(-0.5f,0.5f);
+
+    // random values on interval (0,1]
+    std::uniform_real_distribution<float> distribution(1.0f,0.0f);
+
+    distribution(generator);
 
     // Initialize all input weights to random values in the interval [-0.5, 0,5]
     std::transform(weights_from_input.begin(), weights_from_input.end(), weights_from_input.begin(), [& distribution, & generator](float & weight){
         return distribution(generator);
     });
+
+    ++neurons;
+    std::cout << "neurons: " << neurons << std::endl;
 }
 
 void neuron::print_weights(){

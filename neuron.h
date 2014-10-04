@@ -14,6 +14,7 @@ class neuron{
          All weights assigned to the input edges to this neuron
         */
         std::vector<float> weights_from_input;
+        
 
     public:
         
@@ -23,5 +24,6 @@ class neuron{
         void set_value(float value) {this->value = value;}
         float get_value(void) {return this->value;}
 };
+
 
 #endif
