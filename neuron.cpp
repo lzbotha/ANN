@@ -1,15 +1,29 @@
 #include <algorithm>
-#include <ctime>
+#include <chrono>
 #include <iostream>
+#include <random>
 
 #include "neuron.h"
 
 neuron::neuron(int num_inputs) : value(0.0f), weights_from_input(std::vector<float>(num_inputs)){
-    std::srand(std::time(0)); // use current time as seed for random generator
+
+    //TODO: fix the pseudo random number generation going on here
+    //      atm each nodes rand num generator has the same seed so all nodes are identical
+
+    std::default_random_engine generator;    
+
+    typedef std::chrono::high_resolution_clock myclock;
+    myclock::time_point beginning = myclock::now();
+
+    myclock::duration d = myclock::now() - beginning;
+    unsigned seed2 = d.count();
+
+    generator.seed (seed2);
+    std::uniform_real_distribution<float> distribution(-0.5f,0.5f);
 
     // Initialize all input weights to random values in the interval [-0.5, 0,5]
-    std::transform(weights_from_input.begin(), weights_from_input.end(), weights_from_input.begin(), [](float & weight){
-        return (((float)rand()) / (float)RAND_MAX) - 0.5f;
+    std::transform(weights_from_input.begin(), weights_from_input.end(), weights_from_input.begin(), [& distribution, & generator](float & weight){
+        return distribution(generator);
     });
 }
 
