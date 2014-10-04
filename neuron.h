@@ -15,6 +15,7 @@ class neuron{
         std::vector<float> weights_from_input;
 
         neuron(int num_inputs);
+        void print_weights(void);
 };
 
 #endif
