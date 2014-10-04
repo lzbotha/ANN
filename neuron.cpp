@@ -21,7 +21,11 @@ void neuron::print_weights(){
 }
 
 std::string neuron::to_string(void){
+    std::string temp ("Value:\t" + std::to_string(this->value) + "\n");
 
+    for_each(weights_from_input.begin(), weights_from_input.end(), [& temp](float & weight){
+        temp += std::to_string(weight) + " ";
+    });
 
-    return "";
+    return std::move(temp);
 }
