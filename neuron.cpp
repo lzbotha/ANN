@@ -14,6 +14,7 @@ neuron::neuron(int num_inputs) : weights_from_input(std::vector<float>(num_input
 }
 
 void neuron::print_weights(){
+    // print each weight to stdout
     for_each(weights_from_input.begin(), weights_from_input.end(), [](float weight){
         std::cout << weight << std::endl;
     });
