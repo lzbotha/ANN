@@ -33,3 +33,8 @@ void neuron_layer::feed_forward_from(const neuron_layer & prev_layer){
         n.value = n.activation_function(temp);
     }
 }
+
+void neuron_layer::set_values(std::vector<float> values){
+    for(int i = 0; i < neurons.size(); ++i)
+        neurons[i].value = values[i];
+}
