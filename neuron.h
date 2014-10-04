@@ -1,5 +1,6 @@
 #ifndef neuron_h
 #define neuron_h
+#include <string>
 #include <vector>
 
 class neuron{
@@ -18,6 +19,7 @@ class neuron{
         
         neuron(int num_inputs);
         void print_weights(void);
+        std::string to_string(void);
         void set_value(float value) {this->value = value;}
         float get_value(void) {return this->value;}
 };

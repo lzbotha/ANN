@@ -19,3 +19,9 @@ void neuron::print_weights(){
         std::cout << weight << std::endl;
     });
 }
+
+std::string neuron::to_string(void){
+
+
+    return "";
+}
