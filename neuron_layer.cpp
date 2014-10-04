@@ -18,6 +18,18 @@ std::string neuron_layer::to_string(void){
     return std::move(temp);
 }
 
-void neuron_layer::feed_forward(const neuron_layer & prev_layer){
-    
+void neuron_layer::feed_forward_from(const neuron_layer & prev_layer){
+    // for each neuron in this layer
+    for(neuron & n : neurons){
+        double temp = 0.0f;
+
+        // for each input weight of this neuron
+        for(int i = 0; i < n.weights_from_input.size(); ++i){
+            // add the product of the corresponding input and weight to temp
+            temp += prev_layer.neurons[i].value * n.weights_from_input[i];
+        }
+
+        // apply the activation function and assign the result as the new value
+        n.value = n.activation_function(temp);
+    }
 }

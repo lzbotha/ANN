@@ -4,6 +4,7 @@
 #include <vector>
 
 class neuron{
+    friend class neuron_layer;
     private:
         /**
          The value stored at this neuron
@@ -23,6 +24,8 @@ class neuron{
         std::string to_string(void);
         void set_value(float value) {this->value = value;}
         float get_value(void) {return this->value;}
+
+        float activation_function(float);
 };
 
 

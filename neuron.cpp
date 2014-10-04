@@ -44,3 +44,7 @@ std::string neuron::to_string(void){
 
     return std::move(temp);
 }
+
+float neuron::activation_function(float x){
+    1 / (1 + exp(- x));
+}
