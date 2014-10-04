@@ -2,6 +2,7 @@
 #define neuron_layer_h
 
 #include <vector>
+#include <string>
 
 #include "neuron.h"
 
@@ -11,6 +12,8 @@ class neuron_layer{
 
     public:
         neuron_layer(int size_of_layer, int size_of_prev_layer);
+        std::string to_string(void);
+
 };
 
 #endif
