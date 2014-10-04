@@ -7,10 +7,10 @@
 
 class neuron_layer{
     private:
-        std:::vecotor<neuron> neurons;
+        std::vector<neuron> neurons;
 
     public:
-
+        neuron_layer(int size_of_layer, int size_of_prev_layer);
 };
 
 #endif
