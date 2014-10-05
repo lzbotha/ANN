@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <iostream>
 
 #include "neuron_layer.h"
 
@@ -27,14 +28,31 @@ void neuron_layer::feed_forward_from(const neuron_layer & prev_layer){
         for(int i = 0; i < n.weights_from_input.size(); ++i){
             // add the product of the corresponding input and weight to temp
             temp += prev_layer.neurons[i].value * n.weights_from_input[i];
+            //std::cout << prev_layer.neurons[i].value << "*" << n.weights_from_input[i] << std::endl;
         }
+        //std::cout << std::endl;
 
         // apply the activation function and assign the result as the new value
+        //std::cout << "ws: " << temp << std::endl;
         n.value = n.activation_function(temp);
+        //std::cout << "af: " << n.value << std::endl;
     }
 }
 
 void neuron_layer::set_values(std::vector<float> values){
     for(int i = 0; i < neurons.size(); ++i)
         neurons[i].value = values[i];
+}
+
+void neuron_layer::propagate_error_backwards(float learning_rate, std::vector<float> errors){
+    // for each neuron in this layr
+    for(int j = 0; j < neurons.size(); j++){
+        // for each incoming edge
+        for(int i = 0; i < neurons[j].weights_from_input.size(); ++i){
+            // adjust the weight of this edge proportional to the learning rate
+            // value at this node and error term
+
+            neurons[j].weights_from_input[i] += learning_rate * errors[j] * neurons[j].value;
+        }
+    }
 }
