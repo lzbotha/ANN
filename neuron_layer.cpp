@@ -44,7 +44,7 @@ void neuron_layer::set_values(std::vector<float> values){
         neurons[i].value = values[i];
 }
 
-void neuron_layer::propagate_error_backwards(float learning_rate, std::vector<float> errors){
+void neuron_layer::propagate_error_backwards(float learning_rate, std::vector<float> & errors){
     // for each neuron in this layr
     for(int j = 0; j < neurons.size(); j++){
         // for each incoming edge
