@@ -9,7 +9,6 @@
 class neuron_layer{
     private:
         std::vector<neuron> neurons;
-        int id;
 
     public:
         neuron_layer(int size_of_layer, int size_of_prev_layer = 0);
