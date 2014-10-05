@@ -57,13 +57,13 @@ void neuron_layer::propagate_error_backwards(float learning_rate, std::vector<fl
     }
 }
 
-std::vector<float> neuron_layer::calculate_output_layer_errors(std::vector<float> & target_output, std::vector<float> & actual_output){
+std::vector<float> neuron_layer::calculate_output_layer_errors(std::vector<float> & target_output){
     // initialize vector of errors the size of this layer
     std::vector<float> errors(neurons.size(), 0.0f);
 
     for(int i = 0; i < this->neurons.size(); ++i){
         neuron & n = neurons [i];
-        errors[i] = n.dv_activation_function(n.value) * (target_output[i] - actual_output[i]);
+        errors[i] = n.dv_activation_function(n.value) * (target_output[i] - n.value);
     }
 
     return std::move(errors);
