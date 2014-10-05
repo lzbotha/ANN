@@ -87,3 +87,12 @@ std::vector<float> neuron_layer::calculate_hidden_layer_errors(const neuron_laye
 
     return std::move(errors);
 }
+
+std::vector<float> neuron_layer::get_values(void){
+    std::vector<float> output(neurons.size(), 0.0f);
+
+    for(int i = 0; i < neurons.size(); ++i)
+        output[i] = neurons[i].value;
+
+    return std::move(output);
+}

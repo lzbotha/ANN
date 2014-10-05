@@ -18,6 +18,8 @@ class neural_network{
         neural_network(int input_layer_size, int hidden_layer_size, int output_layer_size);
         float mse(std::vector<float> target_output);
 
+        std::vector<float> process(std::vector<float> input);
+
 };
 
 #endif

@@ -17,6 +17,7 @@ class neuron_layer{
         void feed_forward_from(const neuron_layer & prev_layer);
         void propagate_error_backwards(float learning_rate, std::vector<float> & errors);
         void set_values(std::vector<float> values);
+        std::vector<float> get_values(void);
         std::vector<float> calculate_output_layer_errors(std::vector<float> & target_output);
         std::vector<float> calculate_hidden_layer_errors(const neuron_layer & next_layer, std::vector<float> & next_layer_errors);
 };
