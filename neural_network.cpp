@@ -30,6 +30,9 @@ float neural_network::mse(std::vector<float> target_output){
 
 std::vector<float> neural_network::process(std::vector<float> input){
     this->input_layer.set_values(input);
+    
     this->hidden_layer.feed_forward_from(this->input_layer);
     this->output_layer.feed_forward_from(this->hidden_layer);
+
+    return std::move(output_layer.get_values());
 }
