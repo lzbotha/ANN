@@ -26,6 +26,7 @@ class neuron{
         float get_value(void) {return this->value;}
 
         float activation_function(float);
+        float dv_activation_function(float x);
 };
 
 
