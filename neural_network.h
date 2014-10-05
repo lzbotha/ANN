@@ -16,7 +16,7 @@ class neural_network{
     public:
 
         neural_network(int input_layer_size, int hidden_layer_size, int output_layer_size);
-        //neural_network(int input_layer_size, int hidden_layer1_size, int hidden_layer2_size, int output_layer_size);
+        float mse(std::vector<float> target_output);
 
 };
 

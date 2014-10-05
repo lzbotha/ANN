@@ -5,6 +5,8 @@
 
 class neuron{
     friend class neuron_layer;
+    friend class neural_network;
+    
     private:
         /**
          The value stored at this neuron

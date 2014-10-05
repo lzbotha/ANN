@@ -9,3 +9,21 @@ output_layer(neuron_layer(output_layer_size, hidden_layer_size))
 {
 
 }
+
+float neural_network::mse(std::vector<float> target_output){
+    /*
+    sum <- 0
+    for i in 0...outputLayerSize -1 do
+        err <- desiredoutput[i] - actualoutput[i]
+        sum <- sum + err*err
+    return sum / outputLayerSize
+    */
+
+    float sum = 0;
+    for (int i = 0; this->output_layer.neurons.size(); ++i){
+        float err = target_output[i] - this->output_layer.neurons[i].value;
+        sum += err * err;
+    }
+
+    return sum / this->output_layer.neurons.size();
+}

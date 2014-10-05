@@ -7,6 +7,7 @@
 #include "neuron.h"
 
 class neuron_layer{
+    friend class neural_network;
     private:
         std::vector<neuron> neurons;
 
