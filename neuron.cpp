@@ -18,7 +18,7 @@ neuron::neuron(int num_inputs) : value(0.0f), weights_from_input(std::vector<flo
     generator.seed (seed);
 
     // random values on interval (0,1]
-    std::uniform_real_distribution<float> distribution(1.0f,0.0f);
+    std::uniform_real_distribution<float> distribution(-5.0f, 5.0f);
 
     distribution(generator);
 

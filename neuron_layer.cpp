@@ -33,7 +33,7 @@ void neuron_layer::feed_forward_from(const neuron_layer & prev_layer){
         //std::cout << std::endl;
 
         // apply the activation function and assign the result as the new value
-        //std::cout << "ws: " << temp << std::endl;
+        // std::cout << "ws: " << temp << std::endl;
         n.value = n.activation_function(temp);
         //std::cout << "af: " << n.value << std::endl;
     }
@@ -44,6 +44,7 @@ void neuron_layer::set_values(std::vector<float> values){
         neurons[i].value = values[i];
 }
 
+// this might be broken could be the previous node value not this node value
 void neuron_layer::propagate_error_backwards(float learning_rate, std::vector<float> & errors){
     // for each neuron in this layer
     for(int j = 0; j < neurons.size(); j++){
@@ -77,6 +78,7 @@ std::vector<float> neuron_layer::calculate_hidden_layer_errors(const neuron_laye
     // initialize vector of errors the size of this layer
     std::vector<float> errors(neurons.size(), 0.0f);
 
+    // for each node in this layer
     for(int i = 0; i < neurons.size(); ++i){
         neuron & n = neurons[i];
         errors[i] = n.dv_activation_function(n.value);
