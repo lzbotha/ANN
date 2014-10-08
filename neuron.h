@@ -13,6 +13,8 @@ class neuron{
         */
         float value;
 
+        float weighted_sum;
+
         /**
          All weights assigned to the input edges to this neuron
         */

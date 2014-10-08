@@ -34,6 +34,7 @@ void neuron_layer::feed_forward_from(const neuron_layer & prev_layer){
 
         // apply the activation function and assign the result as the new value
         // std::cout << "ws: " << temp << std::endl;
+        n.weighted_sum = temp;
         n.value = n.activation_function(temp);
         //std::cout << "af: " << n.value << std::endl;
     }
@@ -65,7 +66,7 @@ std::vector<float> neuron_layer::calculate_output_layer_errors(std::vector<float
     for(int i = 0; i < this->neurons.size(); ++i){
         neuron & n = neurons [i];
                 
-        errors[i] = n.dv_activation_function(n.value) * (target_output[i] - n.value);
+        errors[i] = n.dv_activation_function(n.weighted_sum) * (target_output[i] - n.value);
     }
 
     return std::move(errors);
@@ -78,7 +79,7 @@ std::vector<float> neuron_layer::calculate_hidden_layer_errors(const neuron_laye
     // for each node in this layer
     for(int i = 0; i < neurons.size(); ++i){
         neuron & n = neurons[i];
-        errors[i] = n.dv_activation_function(n.value);
+        errors[i] = n.dv_activation_function(n.weighted_sum);
 
         float weighted_error_sum = 0.0f;
         for(int j = 0; j < next_layer.neurons.size(); ++j){
