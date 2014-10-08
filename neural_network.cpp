@@ -36,3 +36,9 @@ std::vector<float> neural_network::process(std::vector<float> input){
 
     return std::move(output_layer.get_values());
 }
+
+std::string to_string(void){
+
+
+    return "";
+}

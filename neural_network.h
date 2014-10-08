@@ -19,6 +19,7 @@ class neural_network{
         float mse(std::vector<float> target_output);
 
         std::vector<float> process(std::vector<float> input);
+        std::string to_string(void);
 
 };
 
