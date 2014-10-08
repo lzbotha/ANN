@@ -61,7 +61,60 @@ void neural_network::propagate_backwards(float learning_rate, std::vector<float>
 }
 
 bool neural_network::train(std::string training_data_filename, float learning_rate, int iterations, float mse_cutoff){
-    
+    using namespace std;
+
+    int iter = 0;
+    float mse = mse_cutoff + 1.0f;
+
+    // while the algorithm has not converged or reached the cutoff point continue training
+    while(mse > mse_cutoff && iter < iterations){
+        ifstream file(training_data_filename);
+
+        // if there was an error opening the file return false
+        if(!file.is_open()){
+            cout << "File error" << endl;
+            return false;
+        }
+
+
+        int training_examples;
+        file >> training_examples;
+        cout << "Number of training examples: " << training_examples << endl;
+
+        // for each training example
+        for(int i = 0; i < training_examples; ++i){
+            // get the inputs
+            vector<float> inputs(this->input_layer.neurons.size(), 0.0f);
+            for(float & f : inputs){
+                file >> f;
+                // cout << f << " ";
+            }
+            // cout << endl;
+
+            // get the outputs
+            vector<float> outputs(this->output_layer.neurons.size(), 0.0f);
+            for(float & f : outputs){
+                file >> f;
+                // cout << f << " ";
+            }
+            // cout << endl;
+
+            // feed the inputs forward through the network
+            this->process(inputs);
+
+
+            // propagate the error backwards
+            this->propagate_backwards(learning_rate, outputs);
+
+            // mse += this->mse(outputs);
+        }
+
+        file.close();
+
+        // mse /= training_examples;
+        if(iterations != -1)
+            ++iter;
+    }
 
 
     return true;
