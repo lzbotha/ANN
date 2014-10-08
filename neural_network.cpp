@@ -50,11 +50,17 @@ std::string neural_network::to_string(void){
     return std::move(temp);
 }
 
-void neural_network::propagate_backwards(std::vector<float> target_outputs){
+void neural_network::propagate_backwards(float learning_rate, std::vector<float> target_outputs){
+    std::vector<float> output_layer_errors = this->output_layer.calculate_output_layer_errors(target_outputs);
 
+    this->output_layer.propagate_error_backwards(learning_rate, output_layer_errors);
+
+    std::vector<float> hidden_layer_errors = this->hidden_layer.calculate_hidden_layer_errors(this->output_layer, output_layer_errors);
+
+    this->hidden_layer.propagate_error_backwards(learning_rate, hidden_layer_errors);
 }
 
-bool neural_network::train(std::string training_data_filename){
+bool neural_network::train(std::string training_data_filename, float learning_rate, int iterations){
     using namespace std;
 
     // try open the file
@@ -81,7 +87,7 @@ bool neural_network::train(std::string training_data_filename){
             }
 
             // propagate the error backwards
-            this->propagate_backwards(target_outputs);
+            this->propagate_backwards(learning_rate, target_outputs);
         }
 
     } else {
