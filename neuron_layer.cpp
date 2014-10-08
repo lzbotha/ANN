@@ -45,7 +45,7 @@ void neuron_layer::set_values(std::vector<float> values){
 }
 
 void neuron_layer::propagate_error_backwards(float learning_rate, std::vector<float> & errors){
-    // for each neuron in this layr
+    // for each neuron in this layer
     for(int j = 0; j < neurons.size(); j++){
         // for each incoming edge
         for(int i = 0; i < neurons[j].weights_from_input.size(); ++i){
@@ -63,6 +63,10 @@ std::vector<float> neuron_layer::calculate_output_layer_errors(std::vector<float
 
     for(int i = 0; i < this->neurons.size(); ++i){
         neuron & n = neurons [i];
+        // std::cout << "value: " << n.value << std::endl;
+        // std::cout << "target value: " << target_output[i] << std::endl;
+        // std::cout << "dv activ: " << n.dv_activation_function(n.value) << std::endl;
+        // std::cout << "t - o: " << (target_output[i] - n.value) << std::endl;
         errors[i] = n.dv_activation_function(n.value) * (target_output[i] - n.value);
     }
 
