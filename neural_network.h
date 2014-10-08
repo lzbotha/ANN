@@ -19,9 +19,10 @@ class neural_network{
         float mse(std::vector<float> target_output);
 
         std::vector<float> process(std::vector<float> input);
+        void propagate_backwards(std::vector<float> target_outputs);
         std::string to_string(void);
 
-        void train(std::string training_data_filename);
+        bool train(std::string training_data_filename);
 };
 
 #endif

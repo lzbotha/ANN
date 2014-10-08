@@ -1,4 +1,5 @@
-
+#include <iostream>
+#include <fstream>
 
 #include "neural_network.h"
 
@@ -37,6 +38,7 @@ std::vector<float> neural_network::process(std::vector<float> input){
     return std::move(output_layer.get_values());
 }
 
+
 std::string neural_network::to_string(void){
     std::string temp = "Input Layer\n";
     temp += this->input_layer.to_string();
@@ -48,6 +50,43 @@ std::string neural_network::to_string(void){
     return std::move(temp);
 }
 
-void train(std::string training_data_filename){
-    
+void neural_network::propagate_backwards(std::vector<float> target_outputs){
+
+}
+
+bool neural_network::train(std::string training_data_filename){
+    using namespace std;
+
+    // try open the file
+    ifstream file(training_data_filename);
+    if(file.is_open()){
+        // get the number of training examples in this file
+        int training_examples;
+        file >> training_examples;
+
+        // for each example in the training data
+        for(int i = 0; i < training_examples; ++i){
+            // get the inputs
+            vector<float> inputs(this->input_layer.neurons.size(), 0.0f);
+            for(float & f : inputs){
+                file >> f;
+            }
+            // pass the inputs to the neural network and feedforward
+            this->process(inputs);
+
+            // get the target outputs
+            vector<float> target_outputs(this->output_layer.neurons.size(), 0.0f);
+            for(float & f : target_outputs){
+                file >> f;
+            }
+
+            // propagate the error backwards
+            this->propagate_backwards(target_outputs);
+        }
+
+    } else {
+        return false;
+    }
+
+    return true;
 }
