@@ -73,19 +73,24 @@ std::string neural_network::to_string(void){
 }
 
 void neural_network::propagate_backwards(float learning_rate, std::vector<float> target_outputs){
-    std::vector<float> output_layer_errors = this->output_layer.calculate_output_layer_errors(target_outputs);
-
-    this->output_layer.propagate_error_backwards(learning_rate, output_layer_errors);
+    
 
     if(this->num_hidden_layers == 1){
+
+        std::vector<float> output_layer_errors = this->output_layer.calculate_output_layer_errors(target_outputs);
         std::vector<float> hidden_layer1_errors = this->hidden_layer1.calculate_hidden_layer_errors(this->output_layer, output_layer_errors);
+
+        this->output_layer.propagate_error_backwards(learning_rate, output_layer_errors);
         this->hidden_layer1.propagate_error_backwards(learning_rate, hidden_layer1_errors);
     }
     else{
-        std::vector<float> hidden_layer2_errors = this->hidden_layer2.calculate_hidden_layer_errors(this->output_layer, output_layer_errors);
-        this->hidden_layer2.propagate_error_backwards(learning_rate, hidden_layer2_errors);
 
+        std::vector<float> output_layer_errors = this->output_layer.calculate_output_layer_errors(target_outputs);
+        std::vector<float> hidden_layer2_errors = this->hidden_layer2.calculate_hidden_layer_errors(this->output_layer, output_layer_errors);
         std::vector<float> hidden_layer1_errors = this->hidden_layer1.calculate_hidden_layer_errors(this->hidden_layer2, hidden_layer2_errors);
+
+        this->output_layer.propagate_error_backwards(learning_rate, output_layer_errors);
+        this->hidden_layer2.propagate_error_backwards(learning_rate, hidden_layer2_errors);
         this->hidden_layer1.propagate_error_backwards(learning_rate, hidden_layer1_errors);
     }
 
