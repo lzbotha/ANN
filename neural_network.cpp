@@ -37,8 +37,13 @@ std::vector<float> neural_network::process(std::vector<float> input){
     return std::move(output_layer.get_values());
 }
 
-std::string to_string(void){
-
-
-    return "";
+std::string neural_network::to_string(void){
+    std::string temp = "Input Layer\n";
+    temp += this->input_layer.to_string();
+    temp += "Hidden Layer\n";
+    temp += this->hidden_layer.to_string();
+    temp += "Output Layer\n";
+    temp += this->output_layer.to_string();
+    
+    return std::move(temp);
 }
