@@ -146,7 +146,7 @@ bool neural_network::train(std::string training_data_filename, float learning_ra
         file.close();
 
         mse /= training_examples;
-        // cout << mse << endl;
+        cout << mse << endl;
         if(iterations != -1){
             ++iter;
         }
