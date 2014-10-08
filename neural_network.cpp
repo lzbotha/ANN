@@ -47,3 +47,7 @@ std::string neural_network::to_string(void){
     
     return std::move(temp);
 }
+
+void train(std::string training_data_filename){
+    
+}

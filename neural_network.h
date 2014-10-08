@@ -21,6 +21,7 @@ class neural_network{
         std::vector<float> process(std::vector<float> input);
         std::string to_string(void);
 
+        void train(std::string training_data_filename);
 };
 
 #endif
