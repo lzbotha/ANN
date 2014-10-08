@@ -22,7 +22,7 @@ class neural_network{
         void propagate_backwards(float learning_rate, std::vector<float> target_outputs);
         std::string to_string(void);
 
-        bool train(std::string training_data_filename, float learning_rate, int iterations);
+        bool train(std::string training_data_filename, float learning_rate, int iterations, float mse_cutoff);
 };
 
 #endif
