@@ -80,8 +80,8 @@ void neural_network::propagate_backwards(double learning_rate, std::vector<doubl
         std::vector<double> output_layer_errors = this->output_layer.calculate_output_layer_errors(target_outputs);
         std::vector<double> hidden_layer1_errors = this->hidden_layer1.calculate_hidden_layer_errors(this->output_layer, output_layer_errors);
 
-        this->output_layer.propagate_error_backwards(learning_rate, output_layer_errors);
-        this->hidden_layer1.propagate_error_backwards(learning_rate, hidden_layer1_errors);
+        this->output_layer.propagate_error_backwards(learning_rate, output_layer_errors, this->hidden_layer1);
+        this->hidden_layer1.propagate_error_backwards(learning_rate, hidden_layer1_errors, this->input_layer);
     }
     else{
 
@@ -89,9 +89,9 @@ void neural_network::propagate_backwards(double learning_rate, std::vector<doubl
         std::vector<double> hidden_layer2_errors = this->hidden_layer2.calculate_hidden_layer_errors(this->output_layer, output_layer_errors);
         std::vector<double> hidden_layer1_errors = this->hidden_layer1.calculate_hidden_layer_errors(this->hidden_layer2, hidden_layer2_errors);
 
-        this->output_layer.propagate_error_backwards(learning_rate, output_layer_errors);
-        this->hidden_layer2.propagate_error_backwards(learning_rate, hidden_layer2_errors);
-        this->hidden_layer1.propagate_error_backwards(learning_rate, hidden_layer1_errors);
+        this->output_layer.propagate_error_backwards(learning_rate, output_layer_errors, this->hidden_layer2);
+        this->hidden_layer2.propagate_error_backwards(learning_rate, hidden_layer2_errors, this->hidden_layer1);
+        this->hidden_layer1.propagate_error_backwards(learning_rate, hidden_layer1_errors, this->input_layer);
     }
 
 }

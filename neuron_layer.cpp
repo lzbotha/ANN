@@ -41,8 +41,7 @@ void neuron_layer::set_values(std::vector<double> values){
         neurons[i].value = values[i];
 }
 
-// this might be broken could be the previous node value not this node value
-void neuron_layer::propagate_error_backwards(double learning_rate, std::vector<double> & errors){
+void neuron_layer::propagate_error_backwards(double learning_rate, std::vector<double> & errors, const neuron_layer & prev_layer){
     // for each neuron in this layer
     for(int j = 0; j < neurons.size(); j++){
         // for each incoming edge
@@ -50,7 +49,7 @@ void neuron_layer::propagate_error_backwards(double learning_rate, std::vector<d
             // adjust the weight of this edge proportional to the learning rate
             // value at this node and error term
 
-            neurons[j].weights_from_input[i] += learning_rate * errors[j] * neurons[j].value;
+            neurons[j].weights_from_input[i] += learning_rate * errors[j] * prev_layer.neurons[i].value;
         }
     }
 }
@@ -61,7 +60,7 @@ std::vector<double> neuron_layer::calculate_output_layer_errors(std::vector<doub
 
     for(int i = 0; i < this->neurons.size(); ++i){
         neuron & n = neurons [i];
-                
+        
         errors[i] = n.dv_activation_function(n.weighted_sum) * (target_output[i] - n.value);
     }
 

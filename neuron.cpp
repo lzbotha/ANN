@@ -17,12 +17,12 @@ neuron::neuron(int num_inputs) : value(0.0), weighted_sum(0.0), weights_from_inp
     // seed it
     generator.seed (seed);
 
-    // random values on interval (0,1]
+    // random values on interval
     std::uniform_real_distribution<double> distribution(-5.0, 5.0);
 
     distribution(generator);
 
-    // Initialize all input weights to random values in the interval [-0.5, 0,5]
+    // Initialize all input weights to random values on the interval
     std::transform(weights_from_input.begin(), weights_from_input.end(), weights_from_input.begin(), [& distribution, & generator](double & weight){
         return distribution(generator);
     });
