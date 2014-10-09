@@ -20,13 +20,13 @@ class neural_network{
 
         neural_network(int input_layer_size, int hidden_layer_size, int output_layer_size);
         neural_network(int input_layer_size, int hidden_layer1_size, int hidden_layer2_size, int output_layer_size);
-        float mse(std::vector<float> target_output);
+        double mse(std::vector<double> target_output);
 
-        std::vector<float> process(std::vector<float> input);
-        void propagate_backwards(float learning_rate, std::vector<float> target_outputs);
+        std::vector<double> process(std::vector<double> input);
+        void propagate_backwards(double learning_rate, std::vector<double> target_outputs);
         std::string to_string(void);
 
-        bool train(std::string training_data_filename, float learning_rate, int iterations, float mse_cutoff);
+        bool train(std::string training_data_filename, double learning_rate, int iterations, double mse_cutoff);
 };
 
 #endif

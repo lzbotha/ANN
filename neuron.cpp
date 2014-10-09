@@ -5,7 +5,7 @@
 
 #include "neuron.h"
 
-neuron::neuron(int num_inputs) : value(0.0f), weighted_sum(0.0f), weights_from_input(std::vector<float>(num_inputs)){
+neuron::neuron(int num_inputs) : value(0.0), weighted_sum(0.0), weights_from_input(std::vector<double>(num_inputs)){
 
     std::default_random_engine generator;
 
@@ -18,19 +18,19 @@ neuron::neuron(int num_inputs) : value(0.0f), weighted_sum(0.0f), weights_from_i
     generator.seed (seed);
 
     // random values on interval (0,1]
-    std::uniform_real_distribution<float> distribution(-5.0f, 5.0f);
+    std::uniform_real_distribution<double> distribution(-5.0, 5.0);
 
     distribution(generator);
 
     // Initialize all input weights to random values in the interval [-0.5, 0,5]
-    std::transform(weights_from_input.begin(), weights_from_input.end(), weights_from_input.begin(), [& distribution, & generator](float & weight){
+    std::transform(weights_from_input.begin(), weights_from_input.end(), weights_from_input.begin(), [& distribution, & generator](double & weight){
         return distribution(generator);
     });
 }
 
 void neuron::print_weights(){
     // print each weight to stdout
-    for_each(weights_from_input.begin(), weights_from_input.end(), [](float & weight){
+    for_each(weights_from_input.begin(), weights_from_input.end(), [](double & weight){
         std::cout << weight << std::endl;
     });
 }
@@ -38,17 +38,17 @@ void neuron::print_weights(){
 std::string neuron::to_string(void){
     std::string temp ("Value:\t" + std::to_string(this->value) + "\nWeighted Sum: " + std::to_string(this->weighted_sum) +  "\nInput Weights: ");
 
-    for_each(weights_from_input.begin(), weights_from_input.end(), [& temp](float & weight){
+    for_each(weights_from_input.begin(), weights_from_input.end(), [& temp](double & weight){
         temp += std::to_string(weight) + " ";
     });
 
     return std::move(temp);
 }
 
-float neuron::activation_function(float x){
+double neuron::activation_function(double x){
     return 1 / (1 + exp(- x));
 }
 
-float neuron::dv_activation_function(float x){
+double neuron::dv_activation_function(double x){
     return this->activation_function(x) * (1 - this->activation_function(x));
 }

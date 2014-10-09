@@ -23,7 +23,7 @@ num_hidden_layers(2)
 
 }
 
-float neural_network::mse(std::vector<float> target_output){
+double neural_network::mse(std::vector<double> target_output){
     /*
     sum <- 0
     for i in 0...outputLayerSize -1 do
@@ -32,16 +32,16 @@ float neural_network::mse(std::vector<float> target_output){
     return sum / outputLayerSize
     */
 
-    float sum = 0;
+    double sum = 0;
     for (int i = 0; i < this->output_layer.neurons.size(); ++i){
-        float err = target_output[i] - this->output_layer.neurons[i].value;
+        double err = target_output[i] - this->output_layer.neurons[i].value;
         sum += err * err;
     }
 
     return sum / this->output_layer.neurons.size();
 }
 
-std::vector<float> neural_network::process(std::vector<float> input){
+std::vector<double> neural_network::process(std::vector<double> input){
     this->input_layer.set_values(input);
     
     this->hidden_layer1.feed_forward_from(this->input_layer);
@@ -72,22 +72,22 @@ std::string neural_network::to_string(void){
     return std::move(temp);
 }
 
-void neural_network::propagate_backwards(float learning_rate, std::vector<float> target_outputs){
+void neural_network::propagate_backwards(double learning_rate, std::vector<double> target_outputs){
     
 
     if(this->num_hidden_layers == 1){
 
-        std::vector<float> output_layer_errors = this->output_layer.calculate_output_layer_errors(target_outputs);
-        std::vector<float> hidden_layer1_errors = this->hidden_layer1.calculate_hidden_layer_errors(this->output_layer, output_layer_errors);
+        std::vector<double> output_layer_errors = this->output_layer.calculate_output_layer_errors(target_outputs);
+        std::vector<double> hidden_layer1_errors = this->hidden_layer1.calculate_hidden_layer_errors(this->output_layer, output_layer_errors);
 
         this->output_layer.propagate_error_backwards(learning_rate, output_layer_errors);
         this->hidden_layer1.propagate_error_backwards(learning_rate, hidden_layer1_errors);
     }
     else{
 
-        std::vector<float> output_layer_errors = this->output_layer.calculate_output_layer_errors(target_outputs);
-        std::vector<float> hidden_layer2_errors = this->hidden_layer2.calculate_hidden_layer_errors(this->output_layer, output_layer_errors);
-        std::vector<float> hidden_layer1_errors = this->hidden_layer1.calculate_hidden_layer_errors(this->hidden_layer2, hidden_layer2_errors);
+        std::vector<double> output_layer_errors = this->output_layer.calculate_output_layer_errors(target_outputs);
+        std::vector<double> hidden_layer2_errors = this->hidden_layer2.calculate_hidden_layer_errors(this->output_layer, output_layer_errors);
+        std::vector<double> hidden_layer1_errors = this->hidden_layer1.calculate_hidden_layer_errors(this->hidden_layer2, hidden_layer2_errors);
 
         this->output_layer.propagate_error_backwards(learning_rate, output_layer_errors);
         this->hidden_layer2.propagate_error_backwards(learning_rate, hidden_layer2_errors);
@@ -96,18 +96,18 @@ void neural_network::propagate_backwards(float learning_rate, std::vector<float>
 
 }
 
-bool neural_network::train(std::string training_data_filename, float learning_rate, int iterations, float mse_cutoff){
+bool neural_network::train(std::string training_data_filename, double learning_rate, int iterations, double mse_cutoff){
     using namespace std;
 
     int iter = 0;
     if(iterations == -1)
         iter = -2;
 
-    float mse = mse_cutoff + 1.0f;
+    double mse = mse_cutoff + 1.0;
 
     // while the algorithm has not converged or reached the cutoff point continue training
     while(mse > mse_cutoff && iter < iterations){
-        mse = 0.0f;
+        mse = 0.0;
         ifstream file(training_data_filename);
 
         // if there was an error opening the file return false
@@ -116,28 +116,22 @@ bool neural_network::train(std::string training_data_filename, float learning_ra
             return false;
         }
 
-
         int training_examples;
         file >> training_examples;
-        // cout << "Number of training examples: " << training_examples << endl;
 
         // for each training example
         for(int i = 0; i < training_examples; ++i){
             // get the inputs
-            vector<float> inputs(this->input_layer.neurons.size(), 0.0f);
-            for(float & f : inputs){
+            vector<double> inputs(this->input_layer.neurons.size(), 0.0);
+            for(double & f : inputs){
                 file >> f;
-                // cout << f << " ";
             }
-            // cout << endl;
 
             // get the outputs
-            vector<float> outputs(this->output_layer.neurons.size(), 0.0f);
-            for(float & f : outputs){
+            vector<double> outputs(this->output_layer.neurons.size(), 0.0);
+            for(double & f : outputs){
                 file >> f;
-                // cout << f << " ";
             }
-            // cout << endl;
 
             // feed the inputs forward through the network
             this->process(inputs);
@@ -152,9 +146,12 @@ bool neural_network::train(std::string training_data_filename, float learning_ra
 
         mse /= training_examples;
         cout << mse << endl;
+
         if(iterations != -1){
             ++iter;
         }
+
+
     }
 
     return true;

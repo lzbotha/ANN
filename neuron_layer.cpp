@@ -22,31 +22,27 @@ std::string neuron_layer::to_string(void){
 void neuron_layer::feed_forward_from(const neuron_layer & prev_layer){
     // for each neuron in this layer
     for(neuron & n : neurons){
-        double temp = 0.0f;
+        double temp = 0.0;
 
         // for each input weight of this neuron
         for(int i = 0; i < n.weights_from_input.size(); ++i){
             // add the product of the corresponding input and weight to temp
             temp += prev_layer.neurons[i].value * n.weights_from_input[i];
-            //std::cout << prev_layer.neurons[i].value << "*" << n.weights_from_input[i] << std::endl;
         }
-        //std::cout << std::endl;
 
         // apply the activation function and assign the result as the new value
-        // std::cout << "ws: " << temp << std::endl;
         n.weighted_sum = temp;
         n.value = n.activation_function(temp);
-        //std::cout << "af: " << n.value << std::endl;
     }
 }
 
-void neuron_layer::set_values(std::vector<float> values){
+void neuron_layer::set_values(std::vector<double> values){
     for(int i = 0; i < neurons.size(); ++i)
         neurons[i].value = values[i];
 }
 
 // this might be broken could be the previous node value not this node value
-void neuron_layer::propagate_error_backwards(float learning_rate, std::vector<float> & errors){
+void neuron_layer::propagate_error_backwards(double learning_rate, std::vector<double> & errors){
     // for each neuron in this layer
     for(int j = 0; j < neurons.size(); j++){
         // for each incoming edge
@@ -59,9 +55,9 @@ void neuron_layer::propagate_error_backwards(float learning_rate, std::vector<fl
     }
 }
 
-std::vector<float> neuron_layer::calculate_output_layer_errors(std::vector<float> & target_output){
+std::vector<double> neuron_layer::calculate_output_layer_errors(std::vector<double> & target_output){
     // initialize vector of errors the size of this layer
-    std::vector<float> errors(neurons.size(), 0.0f);
+    std::vector<double> errors(neurons.size(), 0.0);
 
     for(int i = 0; i < this->neurons.size(); ++i){
         neuron & n = neurons [i];
@@ -72,16 +68,16 @@ std::vector<float> neuron_layer::calculate_output_layer_errors(std::vector<float
     return std::move(errors);
 }
 
-std::vector<float> neuron_layer::calculate_hidden_layer_errors(const neuron_layer & next_layer, std::vector<float> & next_layer_errors){
+std::vector<double> neuron_layer::calculate_hidden_layer_errors(const neuron_layer & next_layer, std::vector<double> & next_layer_errors){
     // initialize vector of errors the size of this layer
-    std::vector<float> errors(neurons.size(), 0.0f);
+    std::vector<double> errors(neurons.size(), 0.0);
 
     // for each node in this layer
     for(int i = 0; i < neurons.size(); ++i){
         neuron & n = neurons[i];
         errors[i] = n.dv_activation_function(n.weighted_sum);
 
-        float weighted_error_sum = 0.0f;
+        double weighted_error_sum = 0.0;
         for(int j = 0; j < next_layer.neurons.size(); ++j){
             weighted_error_sum += next_layer.neurons[j].weights_from_input[i] * next_layer_errors[j];
         }
@@ -92,8 +88,8 @@ std::vector<float> neuron_layer::calculate_hidden_layer_errors(const neuron_laye
     return std::move(errors);
 }
 
-std::vector<float> neuron_layer::get_values(void){
-    std::vector<float> output(neurons.size(), 0.0f);
+std::vector<double> neuron_layer::get_values(void){
+    std::vector<double> output(neurons.size(), 0.0);
 
     for(int i = 0; i < neurons.size(); ++i)
         output[i] = neurons[i].value;

@@ -11,14 +11,14 @@ class neuron{
         /**
          The value stored at this neuron
         */
-        float value;
+        double value;
 
-        float weighted_sum;
+        double weighted_sum;
 
         /**
          All weights assigned to the input edges to this neuron
         */
-        std::vector<float> weights_from_input;
+        std::vector<double> weights_from_input;
         
 
     public:
@@ -26,11 +26,11 @@ class neuron{
         neuron(int num_inputs);
         void print_weights(void);
         std::string to_string(void);
-        void set_value(float value) {this->value = value;}
-        float get_value(void) {return this->value;}
+        void set_value(double value) {this->value = value;}
+        double get_value(void) {return this->value;}
 
-        float activation_function(float);
-        float dv_activation_function(float x);
+        double activation_function(double);
+        double dv_activation_function(double x);
 };
 
 
