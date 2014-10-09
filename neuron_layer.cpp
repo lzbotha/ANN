@@ -22,17 +22,16 @@ std::string neuron_layer::to_string(void){
 void neuron_layer::feed_forward_from(const neuron_layer & prev_layer){
     // for each neuron in this layer
     for(neuron & n : neurons){
-        double temp = 0.0;
+        n.weighted_sum = 0.0;
 
         // for each input weight of this neuron
         for(int i = 0; i < n.weights_from_input.size(); ++i){
             // add the product of the corresponding input and weight to temp
-            temp += prev_layer.neurons[i].value * n.weights_from_input[i];
+            n.weighted_sum += prev_layer.neurons[i].value * n.weights_from_input[i];
         }
 
         // apply the activation function and assign the result as the new value
-        n.weighted_sum = temp;
-        n.value = n.activation_function(temp);
+        n.value = n.activation_function(n.weighted_sum);
     }
 }
 
@@ -48,7 +47,7 @@ void neuron_layer::propagate_error_backwards(double learning_rate, std::vector<d
         for(int i = 0; i < neurons[j].weights_from_input.size(); ++i){
             // adjust the weight of this edge proportional to the learning rate
             // value at this node and error term
-
+            
             neurons[j].weights_from_input[i] += learning_rate * errors[j] * prev_layer.neurons[i].value;
         }
     }

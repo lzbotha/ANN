@@ -4,21 +4,21 @@
 #include "neural_network.h"
 
 neural_network::neural_network(int input_layer_size, int hidden_layer_size, int output_layer_size) :
-input_layer(neuron_layer(input_layer_size)),
-hidden_layer1(neuron_layer(hidden_layer_size, input_layer_size)),
-hidden_layer2(neuron_layer(0, 0)),
-output_layer(neuron_layer(output_layer_size, hidden_layer_size)),
-num_hidden_layers(1)
+    input_layer(neuron_layer(input_layer_size)),
+    hidden_layer1(neuron_layer(hidden_layer_size, input_layer_size)),
+    hidden_layer2(neuron_layer(0, 0)),
+    output_layer(neuron_layer(output_layer_size, hidden_layer_size)),
+    num_hidden_layers(1)
 {
 
 }
 
 neural_network::neural_network(int input_layer_size, int hidden_layer1_size, int hidden_layer2_size, int output_layer_size) :
-input_layer(neuron_layer(input_layer_size)),
-hidden_layer1(neuron_layer(hidden_layer1_size, input_layer_size)),
-hidden_layer2(neuron_layer(hidden_layer2_size, hidden_layer1_size)),
-output_layer(neuron_layer(output_layer_size, hidden_layer2_size)),
-num_hidden_layers(2)
+    input_layer(neuron_layer(input_layer_size)),
+    hidden_layer1(neuron_layer(hidden_layer1_size, input_layer_size)),
+    hidden_layer2(neuron_layer(hidden_layer2_size, hidden_layer1_size)),
+    output_layer(neuron_layer(output_layer_size, hidden_layer2_size)),
+    num_hidden_layers(2)
 {
 
 }
